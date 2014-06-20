@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+zip_version=1.12.4
+curl -L "http://pecl.php.net/get/zip-${zip_version}.tgz" \
+    | tar xzv
+
+cd zip-${zip_version}
+/app/vendor/php/bin/phpize
+./configure --with-php-config=/app/vendor/php/bin/php-config
+
+make
+cp modules/zip.so "$EXT_DIR/zip.so"
+echo "extension=zip.so" > "$PREFIX/etc/conf.d/zip.ini"
